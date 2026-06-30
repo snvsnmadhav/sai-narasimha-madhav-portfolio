@@ -1,126 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sai Narasimha Madhav S.N.V - Portfolio</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background-image: url('brain-background.jpg'); 
-      background-size: cover; 
-      background-attachment: fixed; 
-      margin: 0; 
-      padding: 0; 
-      color: white;
-    }
-    header, footer { 
-      background-color: rgba(0, 0, 0, 0.8); 
-      color: #fff; 
-      padding: 20px; 
-      text-align: center; 
-    }
-    section { 
-      padding: 20px; 
-      max-width: 900px; 
-      margin: auto; 
-      background: rgba(0, 0, 0, 0.7); 
-      margin-top: 20px; 
-      border-radius: 8px; 
-    }
-    h2 { 
-      color: #f8b400; 
-      border-bottom: 2px solid #eee; 
-      padding-bottom: 5px; 
-    }
-    ul { line-height: 1.6; }
-    .contact a { color: #0073b1; text-decoration: none; }
-    .profile-photo { text-align: center; margin-top: 20px; }
-    .profile-photo img { width: 180px; height: auto; border-radius: 10px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sai Narasimha Madhav S.N.V — Portfolio</title>
+<meta name="description" content="Sai Narasimha Madhav S.N.V — MS Researcher at IIT Madras building ML and computer-vision pipelines for cerebral-palsy gait analysis." />
+<meta property="og:title" content="Sai Narasimha Madhav S.N.V — Portfolio" />
+<meta property="og:description" content="ML & computer vision for clinical movement: turning video into motor biomarkers for cerebral-palsy gait analysis at IIT Madras." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#0e1726;
+    --ink-2:#46566c;
+    --ink-3:#7c8aa0;
+    --blue:#1d63d1;          /* primary blue */
+    --blue-700:#1550b0;
+    --blue-deep:#08214f;     /* navy — menu + footer */
+    --blue-soft:#eaf1fc;     /* light blue tint */
+    --blue-soft-2:#f4f8fe;
+    --line:#dfe7f3;
+    --line-2:#c9d6ec;
+    --radius:16px;
+    --maxw:1060px;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --body:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:74px;}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{background:var(--white);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:rgba(29,99,209,.18);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- NAV BAR ---------- */
+  .bar{position:fixed;top:0;left:0;right:0;z-index:60;height:64px;display:flex;align-items:center;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .25s,box-shadow .25s;}
+  .bar.scrolled{border-bottom-color:var(--line);box-shadow:0 6px 24px -18px rgba(8,33,79,.4);}
+  .bar-in{display:flex;align-items:center;justify-content:space-between;width:100%;}
+  .brand{font-family:var(--disp);font-weight:700;font-size:16px;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:center;gap:9px;}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(29,99,209,.16);}
+  /* menu button (top right) */
+  .menu-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:600;font-size:14px;color:var(--white);background:var(--blue);border:none;border-radius:11px;padding:10px 16px;cursor:pointer;transition:.2s;}
+  .menu-btn:hover{background:var(--blue-700);transform:translateY(-1px);}
+  .menu-btn .bars{display:inline-flex;flex-direction:column;gap:3px;}
+  .menu-btn .bars i{width:18px;height:2px;background:#fff;border-radius:2px;display:block;}
+
+  /* ---------- DROPDOWN / FULLSCREEN MENU ---------- */
+  .overlay{position:fixed;inset:0;z-index:80;background:linear-gradient(160deg,rgba(8,33,79,.97),rgba(13,52,120,.96));backdrop-filter:blur(8px);
+    opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;display:flex;flex-direction:column;}
+  .overlay.open{opacity:1;visibility:visible;}
+  .overlay-top{height:64px;display:flex;align-items:center;justify-content:space-between;}
+  .overlay-top .brand{color:#fff;}
+  .overlay-top .brand .dot{box-shadow:0 0 0 4px rgba(255,255,255,.18);background:#fff;}
+  .close-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:20px;width:42px;height:42px;border-radius:11px;cursor:pointer;transition:.2s;line-height:1;}
+  .close-btn:hover{background:rgba(255,255,255,.2);}
+  .overlay-links{flex:1;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:6px;padding-bottom:40px;}
+  .overlay-links a{font-family:var(--disp);font-weight:700;color:#fff;font-size:clamp(2rem,7vw,3.6rem);letter-spacing:-.02em;line-height:1.25;opacity:.92;transition:.2s;display:inline-flex;align-items:center;gap:18px;}
+  .overlay-links a .n{font-family:var(--body);font-weight:500;font-size:.9rem;color:rgba(255,255,255,.45);}
+  .overlay-links a:hover{opacity:1;color:#bfe;transform:translateX(-6px);}
+  .overlay-foot{font-size:13px;color:rgba(255,255,255,.6);padding-bottom:26px;display:flex;gap:18px;justify-content:flex-end;flex-wrap:wrap;}
+  .overlay-foot a{color:rgba(255,255,255,.85);}
+
+  /* ---------- HERO ---------- */
+  header{padding:128px 0 84px;background:radial-gradient(820px 420px at 80% -6%,var(--blue-soft),transparent 70%),linear-gradient(180deg,var(--blue-soft-2),var(--white));}
+  .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:46px;align-items:center;}
+  @media(max-width:840px){.hero{grid-template-columns:1fr;gap:30px;}}
+  .pill{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--blue-700);background:var(--blue-soft);border:1px solid var(--line-2);border-radius:30px;padding:6px 14px;}
+  .pill .live{width:8px;height:8px;border-radius:50%;background:var(--blue);}
+  .hero h1{font-family:var(--disp);font-weight:700;letter-spacing:-.03em;font-size:clamp(2.4rem,6vw,4rem);line-height:1.02;margin:16px 0 8px;color:var(--ink);}
+  .hero h1 .b{color:var(--blue);}
+  .hero .role{font-weight:600;color:var(--ink-2);font-size:1.02rem;margin-bottom:16px;}
+  .hero p.lede{color:var(--ink-2);max-width:46ch;font-size:1.05rem;}
+  .hero p.lede b{color:var(--ink);font-weight:600;}
+  .cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+  .btn{font-weight:600;font-size:14px;padding:12px 20px;border-radius:11px;transition:.2s;display:inline-flex;gap:8px;align-items:center;cursor:pointer;border:1px solid var(--line-2);background:#fff;color:var(--ink);}
+  .btn:hover{border-color:var(--blue);color:var(--blue-700);transform:translateY(-2px);}
+  .btn.primary{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .btn.primary:hover{background:var(--blue-700);color:#fff;box-shadow:0 12px 28px -12px rgba(29,99,209,.6);}
+  .photo{justify-self:center;width:230px;height:230px;border-radius:24px;object-fit:cover;border:4px solid #fff;box-shadow:0 24px 60px -28px rgba(8,33,79,.5),0 0 0 2px var(--line-2);background:var(--blue-soft);}
+  .photo-fallback{display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:5rem;color:var(--blue);}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:82px 0;}
+  section.alt{background:var(--blue-soft-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .head{margin-bottom:38px;}
+  .eyebrow{font-weight:600;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:"";width:24px;height:2px;background:var(--blue);}
+  .head h2{font-family:var(--disp);font-weight:700;font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.02em;margin-top:12px;}
+  .head p{color:var(--ink-3);margin-top:6px;}
+
+  /* about + objectives */
+  .about{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
+  @media(max-width:760px){.about{grid-template-columns:1fr;gap:24px;}}
+  .about p.lead{font-family:var(--disp);font-weight:500;font-size:1.2rem;line-height:1.5;color:var(--ink);}
+  .about p{color:var(--ink-2);margin-bottom:12px;}
+  .obj{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;}
+  .obj h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-700);margin-bottom:12px;font-weight:600;}
+  .obj ul{list-style:none;}
+  .obj li{position:relative;padding-left:22px;color:var(--ink-2);margin-bottom:10px;font-size:.95rem;}
+  .obj li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:50%;background:var(--blue);}
+
+  /* journey timeline */
+  .jgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  @media(max-width:760px){.jgrid{grid-template-columns:1fr;gap:26px;}}
+  .jcol h3{font-family:var(--disp);font-weight:600;font-size:1.1rem;color:var(--blue-700);margin-bottom:14px;}
+  .tline{border-left:2px solid var(--line-2);padding-left:20px;}
+  .titem{position:relative;margin-bottom:18px;}
+  .titem:last-child{margin-bottom:0;}
+  .titem::before{content:"";position:absolute;left:-27px;top:5px;width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid var(--blue);}
+  .titem .yr{font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.02em;}
+  .titem .ti{font-weight:600;color:var(--ink);}
+  .titem .tx{font-size:.93rem;color:var(--ink-2);}
+  .resp{list-style:none;margin-top:4px;}
+  .resp li{position:relative;padding-left:18px;color:var(--ink-2);margin-bottom:7px;font-size:.94rem;}
+  .resp li::before{content:"›";position:absolute;left:2px;color:var(--blue);font-weight:700;}
+
+  /* projects */
+  .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:760px){.pgrid{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:22px;transition:.22s;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+  .card::before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:var(--blue);transition:width .3s;}
+  .card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 22px 46px -30px rgba(8,33,79,.4);}
+  .card:hover::before{width:100%;}
+  .card.feat{grid-column:1/-1;}
+  @media(max-width:760px){.card.feat{grid-column:auto;}}
+  .card .cat{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  .card h3{font-family:var(--disp);font-weight:600;font-size:1.22rem;margin-bottom:8px;}
+  .card p{color:var(--ink-2);font-size:.94rem;margin-bottom:13px;}
+  .card .note{font-size:.85rem;color:var(--blue-700);background:var(--blue-soft);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;margin-bottom:13px;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;}
+  .tag{font-size:11px;color:var(--blue-700);background:var(--blue-soft);border:1px solid var(--line-2);border-radius:6px;padding:3px 9px;font-weight:500;}
+
+  /* skills */
+  .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:760px){.sgrid{grid-template-columns:1fr;}}
+  .sbox{border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:20px 22px;}
+  .sbox h4{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue-700);margin-bottom:11px;font-weight:600;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:13px;color:var(--ink);background:var(--blue-soft-2);border:1px solid var(--line);border-radius:8px;padding:6px 11px;}
+  .certs{list-style:none;}
+  .certs li{position:relative;padding-left:20px;color:var(--ink-2);margin-bottom:8px;font-size:.93rem;}
+  .certs li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700;}
+
+  /* creative */
+  .cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  @media(max-width:600px){.cgrid{grid-template-columns:1fr;}}
+  .ccard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:20px;transition:.2s;}
+  .ccard:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .ccard .ic{font-family:var(--disp);font-weight:700;color:var(--blue);font-size:1.3rem;margin-bottom:6px;}
+  .ccard h4{font-family:var(--disp);font-weight:600;font-size:1.05rem;margin-bottom:5px;}
+  .ccard p{color:var(--ink-2);font-size:.92rem;}
+
+  /* contact */
+  .contact{text-align:center;}
+  .contact h2{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.02em;margin:12px 0;}
+  .contact p.sub{color:var(--ink-2);max-width:46ch;margin:0 auto 26px;}
+  .mail{display:inline-block;font-family:var(--disp);font-weight:600;font-size:clamp(1.1rem,2.6vw,1.5rem);color:#fff;background:var(--blue);border-radius:14px;padding:15px 28px;transition:.2s;}
+  .mail:hover{background:var(--blue-700);transform:translateY(-3px);box-shadow:0 16px 40px -16px rgba(29,99,209,.6);}
+  .cinfo{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+  .cinfo a,.cinfo span{font-size:13px;font-weight:500;color:var(--ink-2);border:1px solid var(--line);border-radius:10px;padding:10px 16px;background:#fff;transition:.2s;}
+  .cinfo a:hover{border-color:var(--blue);color:var(--blue-700);}
+
+  footer{background:var(--blue-deep);color:rgba(255,255,255,.75);padding:26px 0;}
+  .foot-in{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+  .rv.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Sai Narasimha Madhav S.N.V</h1>
-    <p>MS Scholar in Computational Neuroscience | IIT Madras</p>
-    <div class="profile-photo">
-      <img src="photo.jpg" alt="Sai Narasimha Madhav S.N.V">
+
+<!-- ===== NAV BAR ===== -->
+<div class="bar" id="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#home"><span class="dot"></span>Sai Narasimha Madhav</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">Menu <span class="bars"><i></i><i></i><i></i></span></button>
+  </div>
+</div>
+
+<!-- ===== DROPDOWN / FULLSCREEN MENU ===== -->
+<div class="overlay" id="overlay">
+  <div class="wrap overlay-top">
+    <a class="brand" href="#home"><span class="dot"></span>Sai Narasimha Madhav</a>
+    <button class="close-btn" id="closeBtn" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="wrap overlay-links">
+    <a href="#home"><span class="n">01</span>Home</a>
+    <a href="#about"><span class="n">02</span>About</a>
+    <a href="#journey"><span class="n">03</span>Journey</a>
+    <a href="#projects"><span class="n">04</span>Projects</a>
+    <a href="#skills"><span class="n">05</span>Skills</a>
+    <a href="#creative"><span class="n">06</span>Creative Showcase</a>
+    <a href="#contact"><span class="n">07</span>Contact</a>
+  </div>
+  <div class="wrap overlay-foot">
+    <a href="mailto:snvsnmadhav@gmail.com">snvsnmadhav@gmail.com</a>
+    <a href="https://github.com/snvsnmadhav" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<header id="home">
+  <div class="wrap hero">
+    <div>
+      <span class="pill"><span class="live"></span>MS Researcher · IIT Madras</span>
+      <h1>Sai Narasimha<br><span class="b">Madhav S.N.V</span></h1>
+      <p class="role">Medical Science &amp; Technology · Computational Neuroscience Lab, IIT Madras</p>
+      <p class="lede">I build <b>machine-learning and computer-vision pipelines</b> that turn ordinary video into <b>quantitative motor biomarkers</b> — detecting and classifying gait abnormality in <b>cerebral palsy</b>, grounded in clinical biomechanics.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">View projects</a>
+        <a class="btn" href="#contact">Get in touch</a>
+        <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Download CV</a>
+      </div>
     </div>
-  </header>
+    <img class="photo" src="photo.jpg" alt="Sai Narasimha Madhav S.N.V" onerror="this.outerHTML='&lt;div class=&quot;photo photo-fallback&quot;&gt;M&lt;/div&gt;';" />
+  </div>
+</header>
 
-  <section>
-    <h2>About Me</h2>
-    <p>An Electronics Engineer currently pursuing MS in Computational Neuroscience at IIT Madras, with a zeal for building knowledge and skills to develop as a professional engineer. Focused on creating smart medical technologies to overcome neurological hurdles.</p>
-  </section>
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">About</span>
+      <h2>Who I am</h2>
+    </div>
+    <div class="about">
+      <div class="rv">
+        <p class="lead">I work at the seam between clinical biomechanics and brain-inspired machine learning.</p>
+        <p>An MS researcher in Medical Science and Technology at IIT Madras, working in the Computational Neuroscience Lab under Prof. V. Srinivas Chakravarthy. My research extracts biomechanical motor biomarkers from video — knee asymmetry, trunk lean, pelvis sway — and uses them to detect and classify gait abnormality in children with cerebral palsy.</p>
+        <p>The throughline across everything I build is one clean pipeline: raw movement → pose → signal → decision, with oscillator-based neural networks (DONN / ResHopf) as a recurring tool.</p>
+      </div>
+      <div class="obj rv">
+        <h4>Objectives</h4>
+        <ul>
+          <li>Develop machine-learning and computer-vision systems for clinical movement analysis and neurological disorders.</li>
+          <li>Advance video-based motor-biomarker extraction and gait-abnormality classification for pediatric cerebral palsy.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Objectives</h2>
-    <ul>
-      <li>Gain skills in Biomedical Engineering Technologies and Biomedical Image Processing.</li>
-      <li>Develop specific technologies for Neurological disorders.</li>
-    </ul>
-  </section>
+<!-- ===== JOURNEY ===== -->
+<section id="journey" class="alt">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">Journey</span>
+      <h2>Experience &amp; education</h2>
+      <p>How I got here.</p>
+    </div>
+    <div class="jgrid">
+      <div class="jcol rv">
+        <h3>Education</h3>
+        <div class="tline">
+          <div class="titem"><div class="yr">2024 — present</div><div class="ti">MS by Research — Medical Science &amp; Technology, IIT Madras</div><div class="tx">CGPA 8.0 · Computational Neuroscience Lab.</div></div>
+          <div class="titem"><div class="yr">2020 — 2024</div><div class="ti">B.Tech — Electronics &amp; Communication, IIIT DM Kancheepuram</div><div class="tx">CGPA 8.13.</div></div>
+          <div class="titem"><div class="yr">2020</div><div class="ti">Intermediate — Andhra Pradesh Board</div><div class="tx">74%.</div></div>
+          <div class="titem"><div class="yr">2018</div><div class="ti">CBSE — Class X</div><div class="tx">76.4%.</div></div>
+        </div>
+      </div>
+      <div class="jcol rv">
+        <h3>Research &amp; experience</h3>
+        <div class="tline">
+          <div class="titem"><div class="yr">2024 — present</div><div class="ti">CP Gait Analysis — Computational Neuroscience Lab</div><div class="tx">Frontal/sagittal gait analysis from MediaPipe BlazePose; DONN/ResHopf classifier; clinical CP-gait web platform.</div></div>
+          <div class="titem"><div class="yr">2022</div><div class="ti">Deep-learning literature work</div><div class="tx">Diabetic retinopathy, skin cancer, vision transformers, cerebral palsy (Mentor: Dr. Priyanka Kokil).</div></div>
+          <div class="titem"><div class="yr">2022</div><div class="ti">Sorting-algorithm hardware</div><div class="tx">Verilog/Vivado simulation &amp; synthesis (Mentor: Dr. Binsu J. Kailath).</div></div>
+          <div class="titem"><div class="yr">2022</div><div class="ti">Plastic-degradation analysis</div><div class="tx">Deep learning &amp; NIR spectroscopy (Mentor: Dr. Madan Kumar Lakshmanan, CSIR-CEERI).</div></div>
+        </div>
+        <h3 style="margin-top:22px;">Responsibilities</h3>
+        <ul class="resp">
+          <li>Placement Volunteer (2022 — present)</li>
+          <li>Student Volunteer — SAMGATHA</li>
+          <li>Quiz Club Coordinator (2021 — present)</li>
+          <li>Class Representative (2020 — present)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Education</h2>
-    <ul>
-      <li>MS in Computational Neuroscience – IIT Madras (Ongoing)</li>
-      <li>B.Tech, ECE - IIITDM Kancheepuram (2024) - 8.13 CGPA</li>
-      <li>Intermediate - Andhra Pradesh Board (2020) - 74%</li>
-      <li>CBSE - Class X (2018) - 76.4%</li>
-    </ul>
-  </section>
+<!-- ===== PROJECTS ===== -->
+<section id="projects">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">Projects</span>
+      <h2>Selected work</h2>
+      <p>Things I&rsquo;ve built.</p>
+    </div>
+    <div class="pgrid">
+      <div class="card feat rv">
+        <div class="cat">Clinical Platform · AI in Healthcare</div>
+        <h3>Pediatric CP Gait Clinic</h3>
+        <p>A full clinical web application for cerebral-palsy gait assessment: patient management across GMFCS / MACS / CFCS / EDACS, session-based video upload, frontal &amp; sagittal analysis with threshold-based metric cards, and longitudinal tracking across visits.</p>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">MediaPipe</span><span class="tag">SQLite</span><span class="tag">PyTorch</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Computer Vision · Graph NN</div>
+        <h3>Frontal-Plane Gait Classification</h3>
+        <p>An ST-GCN pipeline for CP-vs-typical classification from BlazePose keypoints, modelling the body as a spatio-temporal graph of joints over the gait cycle.</p>
+        <div class="tags"><span class="tag">ST-GCN</span><span class="tag">BlazePose</span><span class="tag">PyTorch</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Physics-Grounded Deep Learning</div>
+        <h3>DONN · ResHopf Classifier</h3>
+        <p>An oscillatory deep network built on Hopf-oscillator dynamics — reused across gait, surface EMG and upper-limb kinematics.</p>
+        <div class="tags"><span class="tag">Hopf Oscillators</span><span class="tag">Dynamical Systems</span><span class="tag">PyTorch</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Open-Source Benchmark · Upper Limb</div>
+        <h3>DCP Reaching Classification</h3>
+        <p>Tri-branch ST-GCN / CNN / Hopf classifying dyskinetic CP vs typically-developing reaching on the KU Leuven DCP dataset (Vanmechelen et al. 2024).</p>
+        <div class="note">Honest result: window-level leakage inflated scores — fix is subject-wise cross-validation.</div>
+        <div class="tags"><span class="tag">ST-GCN</span><span class="tag">CNN</span><span class="tag">Hopf</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Reinforcement Learning · Simulation</div>
+        <h3>CP Locomotion RL</h3>
+        <p>Musculoskeletal locomotion in MyoSuite / MuJoCo with PPO and SAC, a curriculum scheduler, a CP-impairment injection model, and a stability gate.</p>
+        <div class="tags"><span class="tag">MyoSuite</span><span class="tag">MuJoCo</span><span class="tag">PPO</span><span class="tag">SAC</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Severity Grading</div>
+        <h3>GMFCS Classifier</h3>
+        <p>A DONN-based GMFCS severity classifier on the Stanford mobile-gaitlab dataset (Kidzi&#324;ski et al. 2020), with automatic view correction.</p>
+        <div class="tags"><span class="tag">DONN</span><span class="tag">OpenPose</span><span class="tag">mobile-gaitlab</span></div>
+      </div>
+      <div class="card rv">
+        <div class="cat">Bio-Signal · EMG</div>
+        <h3>HD-EMG Intent Classification</h3>
+        <p>DONN-ResHopf classification of elbow isometric contractions on a Mendeley HD-EMG dataset — transferring the oscillatory architecture to muscle signal.</p>
+        <div class="tags"><span class="tag">HD-EMG</span><span class="tag">ResHopf</span><span class="tag">PyTorch</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Certifications</h2>
-    <ul>
-      <li>Python Bootcamp – Udemy (2022)</li>
-      <li>Introduction to Neuroscience for Engineers – NPTEL (2022)</li>
-      <li>IoT Workshop – LEMA LABS, IIT Madras (2021)</li>
-      <li>IoT Master Class – Pantech E-Learning (2021)</li>
-      <li>KLA Workshop on AI & HPC in Semiconductor Manufacturing (2021)</li>
-      <li>Python 3: Beginner to Pro – Udemy (2021)</li>
-    </ul>
-  </section>
+<!-- ===== SKILLS ===== -->
+<section id="skills" class="alt">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">Skills</span>
+      <h2>Toolkit &amp; certifications</h2>
+    </div>
+    <div class="sgrid">
+      <div class="sbox rv">
+        <h4>Programming &amp; ML</h4>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">C</span><span class="chip">PyTorch</span><span class="chip">ST-GCN</span><span class="chip">MediaPipe BlazePose</span><span class="chip">OpenPose</span><span class="chip">MuJoCo / MyoSuite</span><span class="chip">Vivado</span>
+        </div>
+        <h4 style="margin-top:16px;">Web &amp; data</h4>
+        <div class="chips"><span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">SQLite</span></div>
+        <h4 style="margin-top:16px;">Domain</h4>
+        <div class="chips"><span class="chip">Image processing</span><span class="chip">Pattern recognition</span><span class="chip">Bio-signal analysis</span><span class="chip">Gait biomechanics</span></div>
+        <h4 style="margin-top:16px;">Languages</h4>
+        <div class="chips"><span class="chip">English</span><span class="chip">Telugu</span><span class="chip">Tamil</span><span class="chip">Hindi</span><span class="chip">Sanskrit</span><span class="chip">German (A1)</span></div>
+      </div>
+      <div class="sbox rv">
+        <h4>Certifications</h4>
+        <ul class="certs">
+          <li>Introduction to Neuroscience for Engineers — NPTEL (2022)</li>
+          <li>Python Bootcamp — Udemy (2022)</li>
+          <li>IoT Workshop — LEMA Labs, IIT Madras (2021)</li>
+          <li>IoT Master Class — Pantech E-Learning (2021)</li>
+          <li>KLA Workshop on AI &amp; HPC in Semiconductor Manufacturing (2021)</li>
+          <li>Python 3: Beginner to Pro — Udemy (2021)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Skills</h2>
-    <ul>
-      <li>Programming: C, Python, Vivado</li>
-      <li>Image Processing, Pattern Recognition, Bio Signal Analysis</li>
-      <li>Languages: English, Telugu,  Tamil, Hindi, Sanskrit, German (A1)</li>
-    </ul>
-  </section>
+<!-- ===== CREATIVE SHOWCASE ===== -->
+<section id="creative">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">Creative Showcase</span>
+      <h2>Off the clock</h2>
+      <p>The same system-design instinct, applied for fun.</p>
+    </div>
+    <div class="cgrid">
+      <div class="ccard rv"><div class="ic">♞</div><h4>MaddyChess</h4><p>Designed the architecture for a full chess platform.</p></div>
+      <div class="ccard rv"><div class="ic">♪</div><h4>Maddy Music Studio</h4><p>A hands-on music-production tool.</p></div>
+      <div class="ccard rv"><div class="ic">✷</div><h4>KP / Vedic Astrology Tools</h4><p>Chart-analysis tools with a proper computational ephemeris.</p></div>
+      <div class="ccard rv"><div class="ic">🏏</div><h4>Cricket &amp; Poetry</h4><p>Cricket batting-biomechanics analysis, and writing poetry.</p></div>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Professional Experience</h2>
-    <ul>
-      <li>Deep Learning Review: Diabetic Retinopathy, Vision Transformer, etc. (Mentor: Dr. Priyanka Kokil)</li>
-      <li>Sorting Algorithm in HDL, Synthesized in Vivado (Mentor: Dr. Binsu J Kailath)</li>
-      <li>Plastic Degradation via Deep Learning & NIR Spectroscopy (Mentor: Dr. Madan Kumar Lakshmanan, CSIR-CEERI)</li>
-    </ul>
-  </section>
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="contact alt">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center;">Contact</span>
+    <h2>Let&rsquo;s talk</h2>
+    <p class="sub">Research collaboration, clinical-movement data, a project, or just to talk gait and ML — my inbox is open.</p>
+    <a class="mail" href="mailto:snvsnmadhav@gmail.com">snvsnmadhav@gmail.com</a>
+    <div class="cinfo">
+      <span>+91 98847 03109</span>
+      <a href="https://github.com/snvsnmadhav" target="_blank" rel="noopener">github.com/snvsnmadhav</a>
+      <!-- TODO: paste your LinkedIn URL between the quotes below -->
+      <a href="REPLACE_WITH_YOUR_LINKEDIN_URL" target="_blank" rel="noopener">LinkedIn</a>
+      <span>Adyar, Chennai, India</span>
+    </div>
+  </div>
+</section>
 
-  <section>
-    <h2>Student Responsibilities</h2>
-    <ul>
-      <li>Placement Volunteer (2022 - Present)</li>
-      <li>Student Volunteer – SAMGATHA</li>
-      <li>Quiz Club Coordinator (2021 - Present)</li>
-      <li>Class Representative (2020 - Present)</li>
-    </ul>
-  </section>
+<footer>
+  <div class="wrap foot-in">
+    <span>&copy; 2026 Sai Narasimha Madhav S.N.V</span>
+    <span>Built from raw movement · pose · signal</span>
+  </div>
+</footer>
 
-  <section>
-    <h2>Contact</h2>
-    <p>Email: snvsnmadhav@gmail.com</p>
-    <p>Phone: +91 98847 03109</p>
-    <p>LinkedIn: <a href=</a></p>
-    <p>Address: </p>
-  </section>
+<script>
+  // sticky bar border
+  var bar=document.getElementById('bar');
+  addEventListener('scroll',function(){bar.classList.toggle('scrolled',scrollY>16);});
 
-  <footer>
-    <p>&copy; 2026 Sai Narasimha Madhav S.N.V | Built with ❤️</p>
-  </footer>
+  // dropdown / fullscreen menu
+  var overlay=document.getElementById('overlay');
+  function openMenu(){overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeMenu(){overlay.classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('menuBtn').addEventListener('click',openMenu);
+  document.getElementById('closeBtn').addEventListener('click',closeMenu);
+  overlay.querySelectorAll('.overlay-links a').forEach(function(a){a.addEventListener('click',closeMenu);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+
+  // subtle scroll reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+</script>
 </body>
-</html> 
+</html>
