@@ -91,7 +91,7 @@
     .nav-linkedin:hover{color:#fff;background:var(--orange-deep)}
 
     /* ---------- hero ---------- */
-    .hero{padding:72px 0 52px}
+    .hero{padding:36px 0 52px}
     .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:42px;align-items:center}
     .eyebrow{
       display:inline-flex;align-items:center;gap:10px;
@@ -121,6 +121,7 @@
     .hero-card{
       position:relative;background:rgba(255,255,255,.82);border:1px solid rgba(236,217,204,.92);
       border-radius:32px;padding:18px;box-shadow:var(--shadow);overflow:hidden;
+      width:100%;max-width:300px;justify-self:center;
     }
     .hero-card::before{
       content:"";position:absolute;inset:auto -40px -50px auto;width:180px;height:180px;border-radius:50%;
@@ -134,14 +135,14 @@
     }
     .profile-frame img{width:100%;height:auto;object-fit:cover}
     .card-note{
-      position:absolute;left:18px;bottom:18px;z-index:2;
+      position:relative;z-index:2;margin-top:14px;
       background:rgba(255,250,245,.94);border:1px solid var(--line);
-      border-radius:18px;padding:12px 14px;max-width:72%;box-shadow:0 8px 24px rgba(94,57,26,.12)
+      border-radius:18px;padding:12px 14px;box-shadow:0 8px 24px rgba(94,57,26,.12)
     }
     .card-note strong{display:block;font-size:.94rem;color:var(--orange-deep)}
     .card-note span{font-size:.88rem;color:var(--muted)}
 
-    .brand-strip{padding:8px 0 18px}
+    .brand-strip{padding:24px 0 0}
     .brand-strip .strip-box{
       background:rgba(255,255,255,.72);border:1px solid var(--line);box-shadow:var(--shadow);
       border-radius:22px;padding:10px;
@@ -257,8 +258,7 @@
     }
     @media (max-width: 920px){
       .hero-grid,.grid-2,.cards,.contact-box,.skill-grid{grid-template-columns:1fr}
-      .hero{padding-top:54px}
-      .card-note{position:static;max-width:none;margin-top:14px}
+      .hero{padding-top:28px}
     }
     @media (max-width: 640px){
       .topbar .wrap{flex-direction:column;align-items:flex-start;padding:14px 0}
@@ -292,6 +292,15 @@
   </header>
 
   <main id="home">
+    <!-- ===================== BANNER ===================== -->
+    <section class="brand-strip">
+      <div class="wrap">
+        <div class="strip-box">
+          <img src="assets/banner.jpg" alt="Maddyrox AI banner" />
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="wrap hero-grid">
@@ -325,14 +334,6 @@
             <strong>Human movement, intelligence, and rehabilitation</strong>
             <span>Raw movement → pose → signal → decision.</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="brand-strip">
-      <div class="wrap">
-        <div class="strip-box">
-          <img src="assets/banner.jpg" alt="Maddyrox AI banner" />
         </div>
       </div>
     </section>
